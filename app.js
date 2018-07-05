@@ -50,30 +50,43 @@ bot.dialog('Show-KPIs', [
     function (session) {
         var query = session.message.text;
         session.send(`Your query was: ${query}`);
-        var imageURL = "";
+        var imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/1.jpg";
         if (query.toLowerCase().startsWith("stores that were opened"))
             imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/1.jpg";
-        if (query.toLowerCase().startsWith("gross margin variance"))
+        else if (query.toLowerCase().startsWith("gross margin variance"))
             imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/2.jpg";
-        if (query.toLowerCase().startsWith("average unit price by month"))
+        else if (query.toLowerCase().startsWith("average unit price by month"))
             imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/3.jpg";
-        if (query.toLowerCase().startsWith("average selling area size by city as pie"))
+        else if (query.toLowerCase().startsWith("average selling area size by city as pie"))
             imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/4.jpg";
-        if (query.toLowerCase().startsWith("avg $/unit ly per category as clustered column chart"))
+        else if (query.toLowerCase().startsWith("avg $/unit ly per category as clustered column chart"))
             imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/5.jpg";
-
+        else
+            session.send("Sorry, I cannot help with this yet.");
         session.send({
-            text: "Your query results:",
+            text: "Your query results: ",
             attachments: [
                 {
-                    contentType: "image/jpg",
-                    contentUrl: imageURL,
-                    name: "results"
+                    contentType: "image/jpeg",
+                    contentUrl: imageURL
                 }
             ]
         });
 
+        // var queryURL = "http://239f9017.ngrok.io/api/pbiqna/" + encodeURI(query);
+        // session.sendTyping();
+        // session.send({
+        //     text: "Your query results:",
+        //     attachments: [
+        //         {
+        //             contentType: "image/jpg",
+        //             contentUrl: queryURL,
+        //             name: "results2"
+        //         }
+        //     ]
+        // });
 
+        
         session.endDialog();
     }
 ]).triggerAction({
