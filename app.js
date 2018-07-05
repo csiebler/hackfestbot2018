@@ -78,7 +78,7 @@ bot.dialog('Liebherr-Info', function (session) {
     msg.attachments([
         new builder.HeroCard(session)
             .title("Liebherr Company Information")
-            .images([builder.CardImage.create(session, 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Liebherr-Logo.svg/1034px-Liebherr-Logo.svg.png')])
+            .images([builder.CardImage.create(session, 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Liebherr-Logo.svg/500px-Liebherr-Logo.svg.png')])
             .buttons([
                 builder.CardAction.openUrl(session, 'https://de.wikipedia.org/wiki/Liebherr', 'More information')
             ]),
