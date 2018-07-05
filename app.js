@@ -48,17 +48,41 @@ bot.dialog('/', function (session) {
 
 bot.dialog('Show-KPIs', [
     function (session) {
-
         var query = session.message.text;
         session.send(`Your query was: ${query}`);
-        var msg = new builder.Message(session);
-        msg.attachmentLayout(builder.AttachmentLayout.carousel)
-        msg.attachments([
-            new builder.HeroCard(session)
-                .title("Your numbers")
-                .images([builder.CardImage.create(session, 'https://oxcrx34285.i.lithium.com/t5/image/serverpage/image-id/18454iF5B3541309A64563/image-size/large?v=1.0&px=600')])
-        ]);
-        session.send(msg);
+        var imageURL = "";
+        switch (query) {
+            case "stores that were opened in 2014":
+                imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/1.jpg";
+                break;
+            case "gross margin variance to last year by time":
+                imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/2.jpg";
+                break;
+            case "average unit price by month in 2014":
+                imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/3.jpg";
+                break;
+            case "average selling area size by city as pie":
+                imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/4.jpg";
+                break;
+            case "avg $/unit ly per category as clustered column chart":
+                imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/5.jpg";
+                break;
+            default:
+                imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/1.jpg";
+        }
+
+        session.send({
+            text: "Your query results:",
+            attachments: [
+                {
+                    contentType: "image/jpg",
+                    contentUrl: imageURL,
+                    name: "results"
+                }
+            ]
+        });
+
+
         session.endDialog();
     }
 ]).triggerAction({
@@ -67,10 +91,10 @@ bot.dialog('Show-KPIs', [
 
 bot.dialog('help', function (session) {
     session.send("You can ask me things like:<br>" +
-        "* average unit price by month in 2018 <br>" +
+        "* average unit price by month in 2014 <br>" +
         "* average selling area size by city as pie <br>" +
         "* avg $/unit ly per category as clustered column chart <br>" +
-        "* stores that were opened in 2018 <br>" +
+        "* stores that were opened in 2014 <br>" +
         "* gross margin variance to last year by time");
     session.endDialog();
 }).triggerAction({
