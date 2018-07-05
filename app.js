@@ -63,18 +63,18 @@ bot.dialog('Show-KPIs', [
             imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/5.jpg";
 
         session.send({
-        text: "Your query results:",
-        attachments: [
-            {
-                contentType: "image/jpg",
-                contentUrl: imageURL,
-                name: "results"
-            }
-        ]
-    });
+            text: "Your query results:",
+            attachments: [
+                {
+                    contentType: "image/jpg",
+                    contentUrl: imageURL,
+                    name: "results"
+                }
+            ]
+        });
 
 
-session.endDialog();
+        session.endDialog();
     }
 ]).triggerAction({
     matches: 'show-kpis'
@@ -87,6 +87,18 @@ bot.dialog('help', function (session) {
         "* avg $/unit ly per category as clustered column chart <br>" +
         "* stores that were opened in 2014 <br>" +
         "* gross margin variance to last year by time");
+    var msg = new builder.Message(session)
+        .suggestedActions(
+            builder.SuggestedActions.create(
+                session, [
+                    builder.CardAction.imBack(session, "average unit price by month in 2014", "average unit price by month in 2014"),
+                    builder.CardAction.imBack(session, "average selling area size by city as pie", "average selling area size by city as pie"),
+                    builder.CardAction.imBack(session, "avg $/unit ly per category as clustered column chart", "avg $/unit ly per category as clustered column chart"),
+                    builder.CardAction.imBack(session, "stores that were opened in 2014", "stores that were opened in 2014"),
+                    builder.CardAction.imBack(session, "gross margin variance to last year by time", "gross margin variance to last year by time"),
+                ]
+            ));
+    session.send(msg);
     session.endDialog();
 }).triggerAction({
     matches: 'Help'
