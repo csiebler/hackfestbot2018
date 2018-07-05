@@ -98,13 +98,13 @@ bot.dialog('Show-KPIs', [
 });
 
 bot.dialog('help', function (session) {
-    session.send("You can ask me things like:<br>" +
+    var msg = new builder.Message(session)
+        .text("You can ask me things like:<br>" +
         "* average unit price by month in 2014 <br>" +
         "* average selling area size by city as pie <br>" +
         "* avg $/unit ly per category as clustered column chart <br>" +
         "* stores that were opened in 2014 <br>" +
-        "* gross margin variance to last year by time");
-    var msg = new builder.Message(session)
+        "* gross margin variance to last year by time")
         .suggestedActions(
             builder.SuggestedActions.create(
                 session, [
