@@ -49,8 +49,7 @@ bot.dialog('/', function (session) {
 bot.dialog('Show-KPIs', [
     function (session) {
         var query = session.message.text;
-        session.send(`Your query was: ${query}`);
-        var imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/1.jpg";
+        var imageURL = "";
         if (query.toLowerCase().startsWith("stores that were opened"))
             imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/1.jpg";
         else if (query.toLowerCase().startsWith("gross margin variance"))
@@ -61,17 +60,24 @@ bot.dialog('Show-KPIs', [
             imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/4.jpg";
         else if (query.toLowerCase().startsWith("avg $/unit ly per category as clustered column chart"))
             imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/5.jpg";
-        else
+
+        if (imageURL === "") { 
             session.send("Sorry, I cannot help with this yet.");
-        session.send({
-            text: "Your query results: ",
-            attachments: [
-                {
-                    contentType: "image/jpeg",
-                    contentUrl: imageURL
-                }
-            ]
-        });
+
+        } else 
+        {
+            session.send(`Your query was: ${query}`);
+            session.send({
+                text: "Your query results: ",
+                attachments: [
+                    {
+                        contentType: "image/jpeg",
+                        contentUrl: imageURL
+                    }
+                ]
+            });
+        }
+
 
         // var queryURL = "http://239f9017.ngrok.io/api/pbiqna/" + encodeURI(query);
         // session.sendTyping();
