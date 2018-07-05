@@ -51,39 +51,30 @@ bot.dialog('Show-KPIs', [
         var query = session.message.text;
         session.send(`Your query was: ${query}`);
         var imageURL = "";
-        switch (query) {
-            case "stores that were opened in 2014":
-                imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/1.jpg";
-                break;
-            case "gross margin variance to last year by time":
-                imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/2.jpg";
-                break;
-            case "average unit price by month in 2014":
-                imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/3.jpg";
-                break;
-            case "average selling area size by city as pie":
-                imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/4.jpg";
-                break;
-            case "avg $/unit ly per category as clustered column chart":
-                imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/5.jpg";
-                break;
-            default:
-                imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/1.jpg";
-        }
+        if (query.toLowerCase().startsWith("stores that were opened"))
+            imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/1.jpg";
+        if (query.toLowerCase().startsWith("gross margin variance"))
+            imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/2.jpg";
+        if (query.toLowerCase().startsWith("average unit price by month"))
+            imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/3.jpg";
+        if (query.toLowerCase().startsWith("average selling area size by city as pie"))
+            imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/4.jpg";
+        if (query.toLowerCase().startsWith("avg $/unit ly per category as clustered column chart"))
+            imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/5.jpg";
 
         session.send({
-            text: "Your query results:",
-            attachments: [
-                {
-                    contentType: "image/jpg",
-                    contentUrl: imageURL,
-                    name: "results"
-                }
-            ]
-        });
+        text: "Your query results:",
+        attachments: [
+            {
+                contentType: "image/jpg",
+                contentUrl: imageURL,
+                name: "results"
+            }
+        ]
+    });
 
 
-        session.endDialog();
+session.endDialog();
     }
 ]).triggerAction({
     matches: 'show-kpis'
@@ -108,7 +99,7 @@ bot.dialog('Liebherr-Info', function (session) {
     msg.attachments([
         new builder.HeroCard(session)
             .title("Liebherr Company Information")
-            .images([builder.CardImage.create(session, 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Liebherr-Logo.svg/500px-Liebherr-Logo.svg.png')])
+            .images([builder.CardImage.create(session, 'https://hackfestbot2018ac33.blob.core.windows.net/images/logo.png')])
             .buttons([
                 builder.CardAction.openUrl(session, 'https://de.wikipedia.org/wiki/Liebherr', 'More information')
             ]),
