@@ -48,7 +48,9 @@ bot.dialog('/', function (session) {
 
 bot.dialog('Show-KPIs', [
     function (session) {
-        session.send('PLACEHOLDER - I will return something useful here');
+
+        var query = session.message.text;
+        session.send(`Your query was: ${query}`);
         var msg = new builder.Message(session);
         msg.attachmentLayout(builder.AttachmentLayout.carousel)
         msg.attachments([
@@ -67,4 +69,22 @@ bot.dialog('help', function (session) {
     session.endDialog("You can ask me things like<br>'Show me the sales numbers for this quarter'<br>'how many items did we sell in Germany?'");
 }).triggerAction({
     matches: 'Help'
+});
+
+bot.dialog('Liebherr-Info', function (session) {
+    var query = session.message.text;
+    var msg = new builder.Message(session);
+    msg.attachmentLayout(builder.AttachmentLayout.carousel)
+    msg.attachments([
+        new builder.HeroCard(session)
+            .title("Liebherr Company Information")
+            .images([builder.CardImage.create(session, 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Liebherr-Logo.svg/1034px-Liebherr-Logo.svg.png')])
+            .buttons([
+                builder.CardAction.openUrl(session, 'https://de.wikipedia.org/wiki/Liebherr', 'More information')
+            ]),
+    ]);
+    session.send(msg);
+    session.endDialog();
+}).triggerAction({
+    matches: 'liebherr-info'
 });
