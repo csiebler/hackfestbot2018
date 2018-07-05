@@ -40,8 +40,8 @@ bot.on('conversationUpdate', function (message) {
 });
 
 bot.dialog('/', function (session) {
-    session.send('Welcome to BIBO!');
-    session.send('You can ask me things like "show me this year\'s sales numbers\'');
+    session.send('Hello, I\'m BIBO your virtual KPI assistant!');
+    session.beginDialog("help");
 }).triggerAction({
     matches: 'Greeting'
 });
@@ -66,7 +66,13 @@ bot.dialog('Show-KPIs', [
 });
 
 bot.dialog('help', function (session) {
-    session.endDialog("You can ask me things like<br>'Show me the sales numbers for this quarter'<br>'how many items did we sell in Germany?'");
+    session.send("You can ask me things like:<br>" +
+        "* average unit price by month in 2018 <br>" +
+        "* average selling area size by city as pie <br>" +
+        "* avg $/unit ly per category as clustered column chart <br>" +
+        "* stores that were opened in 2018 <br>" +
+        "* gross margin variance to last year by time");
+    session.endDialog();
 }).triggerAction({
     matches: 'Help'
 });
