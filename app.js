@@ -50,15 +50,15 @@ bot.dialog('Show-KPIs', [
     function (session) {
         var query = session.message.text;
         var imageURL = "";
-        if (query.toLowerCase().startsWith("stores that were opened"))
+        if (query.toLowerCase().includes("stores that were opened"))
             imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/1.jpg";
-        if (query.toLowerCase().startsWith("gross margin variance"))
+        if (query.toLowerCase().includes("gross margin variance"))
             imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/2.jpg";
-        if (query.toLowerCase().startsWith("average unit price by month"))
+        if (query.toLowerCase().includes("average unit price by month"))
             imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/3.jpg";
-        if (query.toLowerCase().startsWith("average selling area size by city as pie"))
+        if (query.toLowerCase().includes("average selling area size by city as pie"))
             imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/4.jpg";
-        if (query.toLowerCase().startsWith("avg $/unit ly per category as clustered column chart"))
+        if (query.toLowerCase().includes("avg $/unit ly per category as clustered column chart"))
             imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/5.jpg";
 
         if (imageURL === "") { 
@@ -105,7 +105,7 @@ bot.dialog('help', function (session) {
         "* avg $/unit ly per category as clustered column chart <br>" +
         "* stores that were opened in 2014 <br>" +
         "* gross margin variance to last year by time")
-        .suggestedActions(
+        .suggestedActions(  
             builder.SuggestedActions.create(
                 session, [
                     builder.CardAction.imBack(session, "average unit price by month in 2014", "average unit price by month in 2014"),
