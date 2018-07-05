@@ -118,3 +118,16 @@ bot.dialog('Liebherr-Info', function (session) {
 }).triggerAction({
     matches: 'liebherr-info'
 });
+
+
+bot.dialog('appreciation', function (session) {
+    session.endDialog("Thank you, I love you too! Please come back soon and vote for LIEBHERR 😀");
+}).triggerAction({
+    matches: 'appreciation'
+});
+
+bot.dialog('goodbye', function (session) {
+    session.endDialog("Okay, bye bye - Hope to see soon! And by the way, please vote for LIEBHERR 😀");
+}).triggerAction({
+    matches: 'goodbye'
+});
