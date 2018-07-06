@@ -1,6 +1,9 @@
 var restify = require('restify');
 var builder = require('botbuilder');
 var botbuilder_azure = require("botbuilder-azure");
+var request = require('request');
+var util = require('util');
+
 require('dotenv').config();
 
 const STORAGE_CONNECTION = process.env.STORAGE_CONNECTION;
@@ -29,6 +32,7 @@ bot.set('storage', tableStorage);
 var recognizer = new builder.LuisRecognizer(LUIS_MODEL_URL);
 bot.recognizer(recognizer);
 
+// Make sure our bot initiates the conversation
 bot.on('conversationUpdate', function (message) {
     if (message.membersAdded && message.membersAdded.length > 0) {
         message.membersAdded.forEach(function (identity) {
@@ -41,7 +45,8 @@ bot.on('conversationUpdate', function (message) {
 
 bot.dialog('/', function (session) {
     session.send('Hello, I\'m BIBO your virtual KPI assistant!');
-    session.beginDialog("help");
+    // just print out help information at the beginning
+    session.beginDialog("Help");
 }).triggerAction({
     matches: 'Greeting'
 });
@@ -49,6 +54,8 @@ bot.dialog('/', function (session) {
 bot.dialog('Show-KPIs', [
     function (session) {
         var query = session.message.text;
+
+        // Mockup code
         var imageURL = "";
         if (query.toLowerCase().includes("stores that were opened"))
             imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/1.jpg";
@@ -61,7 +68,7 @@ bot.dialog('Show-KPIs', [
         if (query.toLowerCase().includes("avg $/unit ly per category as clustered column chart"))
             imageURL = "https://hackfestbot2018ac33.blob.core.windows.net/images/5.jpg";
 
-        if (imageURL === "") { 
+        if (imageURL === "") {
             session.send("Sorry, I cannot help with this yet.");
         } else {
             session.send(`Your query was: ${query}`);
@@ -76,36 +83,50 @@ bot.dialog('Show-KPIs', [
             });
         }
 
-
-        // var queryURL = "http://239f9017.ngrok.io/api/pbiqna/" + encodeURI(query);
-        // session.sendTyping();
+        // var queryURL = "https://xxxxxx/api/pbiqna/" + encodeURI(query);
         // session.send({
-        //     text: "Your query results:",
+        //     text: "I'm loading your results...",
         //     attachments: [
         //         {
-        //             contentType: "image/jpg",
+        //             contentType: "image/png",
         //             contentUrl: queryURL,
-        //             name: "results2"
+        //             name: "results.png"
         //         }
         //     ]
         // });
 
-        
+        // session.send("I'm getting your results...");
+        // session.sendTyping();
+
+        // request(queryURL, function (error, response, body) {
+        //     var image = new Buffer(body).toString('base64');
+        //     session.send({
+        //         text: "Your query results:",
+        //         attachments: [
+        //             {
+        //                 contentUrl: util.format(`data:image/png;base64,${image}`),
+        //                 contentType: "image/png",
+        //                 name: "datauri"
+        //             }
+        //         ]
+        //     });
+        // });
+
         session.endDialog();
     }
 ]).triggerAction({
     matches: 'show-kpis'
 });
 
-bot.dialog('help', function (session) {
+bot.dialog('Help', function (session) {
     var msg = new builder.Message(session)
         .text("You can ask me things like:<br>" +
-        "* average unit price by month in 2014 <br>" +
-        "* average selling area size by city as pie <br>" +
-        "* avg $/unit ly per category as clustered column chart <br>" +
-        "* stores that were opened in 2014 <br>" +
-        "* gross margin variance to last year by time")
-        .suggestedActions(  
+            "* average unit price by month in 2014 <br>" +
+            "* average selling area size by city as pie <br>" +
+            "* avg $/unit ly per category as clustered column chart <br>" +
+            "* stores that were opened in 2014 <br>" +
+            "* gross margin variance to last year by time")
+        .suggestedActions(
             builder.SuggestedActions.create(
                 session, [
                     builder.CardAction.imBack(session, "average unit price by month in 2014", "average unit price by month in 2014"),
@@ -121,33 +142,33 @@ bot.dialog('help', function (session) {
     matches: 'Help'
 });
 
-bot.dialog('Liebherr-Info', function (session) {
+bot.dialog('Microsoft-Info', function (session) {
     var query = session.message.text;
     var msg = new builder.Message(session);
     msg.attachmentLayout(builder.AttachmentLayout.carousel)
     msg.attachments([
         new builder.HeroCard(session)
-            .title("Liebherr Company Information")
+            .title("Microsoft Company Information")
             .images([builder.CardImage.create(session, 'https://hackfestbot2018ac33.blob.core.windows.net/images/logo.png')])
             .buttons([
-                builder.CardAction.openUrl(session, 'https://de.wikipedia.org/wiki/Liebherr', 'More information')
+                builder.CardAction.openUrl(session, 'https://de.wikipedia.org/wiki/Microsoft', 'More information')
             ]),
     ]);
     session.send(msg);
     session.endDialog();
 }).triggerAction({
-    matches: 'liebherr-info'
+    matches: 'microsoft-info'
 });
 
 
-bot.dialog('appreciation', function (session) {
-    session.endDialog("Thank you, I love you too! Please come back soon and vote for LIEBHERR 😀");
+bot.dialog('Appreciation', function (session) {
+    session.endDialog("Thank you, I love you too! Please come back soon and vote for our project 😀");
 }).triggerAction({
     matches: 'appreciation'
 });
 
-bot.dialog('goodbye', function (session) {
-    session.endDialog("Okay, bye bye - Hope to see soon! And by the way, please vote for LIEBHERR 😀");
+bot.dialog('Goodbye', function (session) {
+    session.endDialog("Okay, bye bye - Hope to see soon! And by the way, please vote for our project 😀");
 }).triggerAction({
     matches: 'goodbye'
 });
